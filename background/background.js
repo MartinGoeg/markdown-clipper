@@ -11,12 +11,12 @@ function createReadableVersion(dom) {
     var article = reader.parse();
     return article;
 }
-
 function convertArticleToMarkdown(article, source) {
     var turndownService = new TurndownService()
     var gfm = turndownPluginGfm.gfm
     turndownService.use(gfm)
     var markdown = turndownService.turndown(article.content);
+    var frontmatter = [];
 
     //add summary if exist
     if (!!article.excerpt) {
@@ -28,9 +28,11 @@ function convertArticleToMarkdown(article, source) {
 
     //add source if exist
     if (!!source) {
-        markdown = "---\n"+"source: "+source+"\n---\n"+markdown;
+        frontmatter.source = source;
     }
 
+    markdown = "---\n"+"source: "+frontmatter.source+"\n---\n"+markdown;
+    
     return markdown;
 }
 
