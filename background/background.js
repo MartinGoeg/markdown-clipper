@@ -30,8 +30,11 @@ function convertArticleToMarkdown(article, source) {
     if (!!source) {
         frontmatter.source = source;
     }
+    frontmatter.date = new Date().toISOString();
 
-    markdown = "---\n"+"source: "+frontmatter.source+"\n---\n"+markdown;
+    const frontmatterstr = "---\n" + "source: " + frontmatter.source + "\ndate: "+frontmatter.date+"\n---\n";
+
+    markdown = frontmatterstr+markdown;
     
     return markdown;
 }
