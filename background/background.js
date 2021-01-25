@@ -28,7 +28,7 @@ function convertArticleToMarkdown(article, source) {
 
     //add source if exist
     if (!!source) {
-        markdown = markdown + "\n\n\n" + "[Source](" + source + ")";
+        markdown = "---\n"+"source: "+source+"\n---\n"+markdown;
     }
 
     return markdown;
