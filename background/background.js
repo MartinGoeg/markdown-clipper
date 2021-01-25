@@ -32,7 +32,16 @@ function convertArticleToMarkdown(article, source) {
     }
     frontmatter.date = new Date().toISOString();
 
-    const frontmatterstr = "---\n" + "source: " + frontmatter.source + "\ndate: "+frontmatter.date+"\n---\n";
+
+    const frontmatterstr = "---"
+        +"\ntitle: " + article.title
+        +"\nsource: " + frontmatter.source 
+        +"\ndate: " + frontmatter.date 
+        +"\nauthor: " + article.byline
+        +"\ntags:"
+        +"\n  - scraped"
+        +"\n  - "+new URL(source).hostname
+        +"\n---\n";
 
     markdown = frontmatterstr+markdown;
     
