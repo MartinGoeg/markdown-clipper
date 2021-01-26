@@ -96,6 +96,18 @@ function downloadMarkdown(markdown, article) {
     }
 }
 
+function getJsonLD(dom) {
+    const jsonldel = dom.querySelector('script[type="application/ld+json"]').innerHTML;
+
+    var jsonLD
+    if (jsonldel){
+        jsonLD = JSON.parse(jsonldel);
+    } else {
+        jsonld = null;
+    }
+    
+    return jsonLD;
+}
 
 //function that handles messages from the injected script into the site
 function notify(message) {
@@ -104,9 +116,13 @@ function notify(message) {
     if (dom.documentElement.nodeName === "parsererror") {
         console.error("error while parsing");
     }
+    var jsonLD = getJsonLD(dom);
 
     var article = createReadableVersion(dom);
     var markdown = convertArticleToMarkdown(article, message.source);
+    if (jsonLD){
+        markdown = markdown + JSON.stringify(jsonLD.author.name);
+    }
     downloadMarkdown(markdown, article);
 }
 
